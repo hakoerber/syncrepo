@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+
+import sys
+import argparse
+import json
+import subprocess
+
+baseargs = [
+    "rsync",
+    "--hard-links",
+    "--itemize-changes",
+    "--recursive",
+    "--update",
+    "--delete",
+    "--delete-after",
+    "--delay-updates"
+]
+
+parser = argparse.ArgumentParser(add_help=False)
+parser.add_argument('--config', dest='config', required=True)
+
+args = parser.parse_args()
+print(args.config)
+
+with open(args.config) as config :
+    data = json.load(config)
+
+fail = False
+    
+for path, mirror in data["repos"].items():
+    args = (baseargs + 
+	["rsync://{mirror}/{path}/".format(mirror=mirror, path=path)] + 
+	["{base}/{path}".format(base=data["base"], path=path)])
+    print(" ".join(args))
+    result = subprocess.call(args)
+    if result != 0:
+        fail = True
+
+if fail:
+    sys.exit(1)
+
+
+
+
+
+#
+#_REPOS=(
+#("centos/7/os/" "ftp.fau.de")
+#("centos/7/updates/" "ftp.fau.de")
+#("epel/7/x86_64" "ftp.fau.de")
+#)
+#
+#_LOCALBASE="/srv/www/packages"
+#
+#for repo in "${_REPOS[@]}" ; do
+#echo "rsync://repo[0]/repo[1] $_LOCALBASE/repo[1]"
+#done
+##rsync "${_OPTS[@]}" rsync://ftp.fau.de/centos/7/os/      /srv/www/packages/centos/7/os/
+##rsync "${_OPTS[@]}" rsync://ftp.fau.de/centos/7/updates/ /srv/www/packages/centos/7/updates/
+##rsync "${_OPTS[@]}" rsync://ftp.fau.de/epel/7/x86_64/    /srv/www/packages/epel/7/x86_64/

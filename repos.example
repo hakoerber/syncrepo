@@ -1,0 +1,8 @@
+{
+	"base": "/srv/www/packages",
+	"repos": {
+		"centos/7/os": "mirror.example.com",
+		"centos/7/updates": "mirror.example.com",
+		"epel/7/x86_64": "mirror.example.com"
+	}
+}
