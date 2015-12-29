@@ -29,8 +29,8 @@ fail = False
     
 for path, mirror in data["repos"].items():
     args = (baseargs + 
-	["rsync://{mirror}/{path}/".format(mirror=mirror, path=path)] + 
-	["{base}/{path}".format(base=data["base"], path=path)])
+        ["rsync://{mirror}/{path}/".format(mirror=mirror, path=path)] + 
+        ["{base}/{path}".format(base=data["base"], path=path)])
     print(" ".join(args))
     result = subprocess.call(args)
     if result != 0:
@@ -38,23 +38,3 @@ for path, mirror in data["repos"].items():
 
 if fail:
     sys.exit(1)
-
-
-
-
-
-#
-#_REPOS=(
-#("centos/7/os/" "ftp.fau.de")
-#("centos/7/updates/" "ftp.fau.de")
-#("epel/7/x86_64" "ftp.fau.de")
-#)
-#
-#_LOCALBASE="/srv/www/packages"
-#
-#for repo in "${_REPOS[@]}" ; do
-#echo "rsync://repo[0]/repo[1] $_LOCALBASE/repo[1]"
-#done
-##rsync "${_OPTS[@]}" rsync://ftp.fau.de/centos/7/os/      /srv/www/packages/centos/7/os/
-##rsync "${_OPTS[@]}" rsync://ftp.fau.de/centos/7/updates/ /srv/www/packages/centos/7/updates/
-##rsync "${_OPTS[@]}" rsync://ftp.fau.de/epel/7/x86_64/    /srv/www/packages/epel/7/x86_64/

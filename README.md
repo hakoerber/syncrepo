@@ -17,9 +17,18 @@ For example, when using `repos.example`, `mirror.example.com/centos/7/os` would 
 
 ## Scheduling syncs with cron
 
-Adding the following line to `/etc/crontab` would sync the mirror at 23:00 every day: 
+Adding the following line to `/etc/crontab` would sync the mirror at 23:00 every day:
 
     0 23 * * * root /usr/local/bin/syncrepo --config /etc/syncrepo.conf >>/var/log/syncrepo.log 2>&1
 
-The time was chosen because `yum-cron(8)` runs some time 
+The time was chosen because `yum-cron(8)` runs some time
 after midnight by default, and gives rsync enough time to update the mirror.
+
+## Requirements
+
+* Python 3 <= 3.4 (3.5 changed the `subprocess` module)
+* Non-ancient Rsync
+
+## License
+
+Apache License 2.0
