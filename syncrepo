@@ -27,10 +27,10 @@ with open(args.config) as config :
     data = json.load(config)
 
 fail = False
-    
+
 for path, mirror in data["repos"].items():
-    args = (baseargs + 
-        ["rsync://{mirror}/{path}/".format(mirror=mirror, path=path)] + 
+    args = (baseargs +
+        ["rsync://{mirror}/{path}/".format(mirror=mirror, path=path)] +
         ["{base}/{path}".format(base=data["base"], path=path)])
     print(" ".join(args))
     result = subprocess.call(args)
