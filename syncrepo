@@ -8,7 +8,7 @@ import subprocess
 baseargs = [
     "rsync",
     "--hard-links",
-    "--out-format", "%t %i %n%L" # like --itemize-changes, but with timestamp
+    "--out-format", "%t %i %n%L", # like --itemize-changes, but with timestamp
     "--stats",
     "--recursive",
     "--update",
