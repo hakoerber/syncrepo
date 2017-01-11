@@ -9,7 +9,6 @@ import subprocess
 baseargs = [
     "rsync",
     "--hard-links",
-    "--out-format", "%t %i %n%L", # like --itemize-changes, but with timestamp
     "--stats",
     "--recursive",
     "--update",
@@ -34,9 +33,13 @@ for path, mirror in data["repos"].items():
     if not os.path.exists(target):
         os.makedirs(target, 0o755)
 
+    # like --itemize-changes, but with timestamp
+    format = "[{mirror}] {path}: %t %i %n%L".format(mirror=mirror, path=path)
+
     args = (baseargs +
-        ["rsync://{mirror}/{path}/".format(mirror=mirror, path=path)] +
-        [target])
+            ["--out-format", format] +
+            ["rsync://{mirror}/{path}/".format(mirror=mirror, path=path)] +
+            [target])
     print(" ".join(args))
     result = subprocess.call(args)
     if result != 0:
