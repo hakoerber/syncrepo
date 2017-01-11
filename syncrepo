@@ -28,7 +28,7 @@ with open(args.config) as config :
 
 fail = False
 
-for path, mirror in data["repos"].items():
+for path, mirror in sorted(data["repos"].items()):
     target = "{base}/{path}".format(base=data["base"], path=path)
     if not os.path.exists(target):
         os.makedirs(target, 0o755)
