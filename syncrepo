@@ -26,7 +26,7 @@ print(args.config)
 with open(args.config) as config:
     data = json.load(config)
 
-fail = False
+fail = 0
 
 for path, mirror in sorted(data["repos"].items()):
     target = "{base}/{path}".format(base=data["base"], path=path)
@@ -43,7 +43,6 @@ for path, mirror in sorted(data["repos"].items()):
     print(" ".join(args))
     result = subprocess.call(args)
     if result != 0:
-        fail = True
+        fail = 1
 
-if fail:
-    sys.exit(1)
+sys.exit(fail)
