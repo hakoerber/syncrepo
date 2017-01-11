@@ -23,7 +23,7 @@ parser.add_argument('--config', dest='config', required=True)
 args = parser.parse_args()
 print(args.config)
 
-with open(args.config) as config :
+with open(args.config) as config:
     data = json.load(config)
 
 fail = False
